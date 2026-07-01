@@ -1,0 +1,22 @@
+# Virtual Environment
+venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# macOS
+.DS_Store
+
+# Environment variables
+.env
+
+# Uploaded images
+static/uploads/
+
+# Audio output
+static/audio/
+
+# IDE
+.vscode/
+.idea/
