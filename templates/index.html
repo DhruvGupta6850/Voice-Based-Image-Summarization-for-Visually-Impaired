@@ -72,6 +72,22 @@
 
 {% endif %}
 
+{% if objects %}
+
+<h2>Detected Objects</h2>
+
+<ul>
+
+{% for object in objects %}
+
+<li>{{ object }}</li>
+
+{% endfor %}
+
+</ul>
+
+{% endif %}
+
 </div>
 
 </body>
