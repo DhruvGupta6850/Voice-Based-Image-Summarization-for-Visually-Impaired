@@ -1,9 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, current_app
-from services.caption_service import caption_service
 from werkzeug.utils import secure_filename
 import os
-from services.ocr_service import ocr_service
-from services.object_detection_service import object_detection_service
+from services.analysis_service import analysis_service
 
 main = Blueprint("main", __name__)
 
@@ -44,9 +42,11 @@ def home():
 
             file.save(save_path)
 
-            caption = caption_service.generate_caption(save_path)
-            ocr_text = ocr_service.extract_text(save_path)
-            objects = object_detection_service.detect_objects(save_path)
+            result = analysis_service.analyze_image(save_path)
+
+            caption = result["caption"]
+            ocr_text = result["text"]
+            objects = result["objects"]
 
             image_name = filename
 
