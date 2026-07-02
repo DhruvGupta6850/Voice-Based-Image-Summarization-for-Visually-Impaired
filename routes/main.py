@@ -3,6 +3,7 @@ from services.caption_service import caption_service
 from werkzeug.utils import secure_filename
 import os
 from services.ocr_service import ocr_service
+from services.object_detection_service import object_detection_service
 
 main = Blueprint("main", __name__)
 
@@ -20,6 +21,7 @@ def home():
     image_name = None
     caption = None
     ocr_text = None
+    objects = []
 
     if request.method == "POST":
 
@@ -44,6 +46,7 @@ def home():
 
             caption = caption_service.generate_caption(save_path)
             ocr_text = ocr_service.extract_text(save_path)
+            objects = object_detection_service.detect_objects(save_path)
 
             image_name = filename
 
@@ -51,5 +54,6 @@ def home():
     "index.html",
     image_name=image_name,
     caption=caption,
-    ocr_text=ocr_text
+    ocr_text=ocr_text,
+    objects=objects
 )
