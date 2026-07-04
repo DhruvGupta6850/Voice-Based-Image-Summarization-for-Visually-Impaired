@@ -1,6 +1,7 @@
 from services.caption_service import caption_service
 from services.ocr_service import ocr_service
 from services.object_detection_service import object_detection_service
+from services.summary_service import summary_service
 
 
 class AnalysisService:
@@ -13,10 +14,17 @@ class AnalysisService:
 
         objects = object_detection_service.detect_objects(image_path)
 
+        summary = summary_service.generate_summary(
+        caption,
+        objects,
+        text
+        )
+
         return {
             "caption": caption,
             "text": text,
-            "objects": objects
+            "objects": objects,
+            "summary": summary
         }
 
 

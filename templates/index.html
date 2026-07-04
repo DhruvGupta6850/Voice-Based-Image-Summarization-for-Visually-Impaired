@@ -88,6 +88,28 @@
 
 {% endif %}
 
+{% if summary %}
+
+<h2>Final AI Summary</h2>
+
+<div class="summary-box">
+    {{ summary }}
+</div>
+
+{% endif %}
+
+
+{% if audio_path %}
+
+<h2>🔊 Listen to Summary</h2>
+
+<audio controls>
+    <source src="{{ audio_path }}" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+
+{% endif %}
+
 </div>
 
 </body>

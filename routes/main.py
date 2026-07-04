@@ -44,6 +44,11 @@ def home():
 
             result = analysis_service.analyze_image(save_path)
 
+            summary = result["summary"]
+
+            from services.speech_service import speech_service
+            audio_path = speech_service.text_to_speech(summary)
+
             caption = result["caption"]
             ocr_text = result["text"]
             objects = result["objects"]
@@ -55,5 +60,7 @@ def home():
     image_name=image_name,
     caption=caption,
     ocr_text=ocr_text,
-    objects=objects
+    objects=objects,
+    summary=summary,
+    audio_path=audio_path
 )
