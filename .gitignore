@@ -21,3 +21,6 @@ static/audio/
 .vscode/
 .idea/
 
+
+yolov8n.pt
+
