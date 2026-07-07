@@ -2,6 +2,8 @@ from flask import Blueprint, render_template, request, redirect, current_app
 from werkzeug.utils import secure_filename
 import os
 from services.analysis_service import analysis_service
+from services.speech_service import speech_service
+
 
 main = Blueprint("main", __name__)
 
@@ -16,10 +18,14 @@ def allowed_file(filename):
 @main.route("/", methods=["GET", "POST"])
 def home():
 
+
     image_name = None
     caption = None
     ocr_text = None
     objects = []
+    summary = ""
+    audio_path = None
+
 
     if request.method == "POST":
 
@@ -42,16 +48,18 @@ def home():
 
             file.save(save_path)
 
-            result = analysis_service.analyze_image(save_path)
+            try:
+                result = analysis_service.analyze_image(save_path)
 
-            summary = result["summary"]
+                summary = result["summary"]
+                caption = result["caption"]
+                ocr_text = result["text"]
+                objects = result["objects"]
 
-            from services.speech_service import speech_service
-            audio_path = speech_service.text_to_speech(summary)
+                audio_path = speech_service.text_to_speech(summary)
 
-            caption = result["caption"]
-            ocr_text = result["text"]
-            objects = result["objects"]
+            except Exception as e:
+                summary = f"An error occurred: {e}"
 
             image_name = filename
 
