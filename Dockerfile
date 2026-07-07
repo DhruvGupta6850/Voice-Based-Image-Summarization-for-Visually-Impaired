@@ -13,11 +13,9 @@ RUN apt-get update && apt-get install -y \
 # Copy requirements first (better Docker caching)
 COPY requirements.txt .
 
-# Upgrade pip
-RUN pip install --upgrade pip
-
-# Install Python packages
-RUN pip install --no-cache-dir -r requirements.txt
+# Upgrade pip and Install Python packages
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the project
 COPY . .
@@ -30,5 +28,6 @@ EXPOSE 7860
 
 ENV PORT=7860
 ENV PYTHONUNBUFFERED=1
+ENV HF_HOME=/tmp/huggingface
 
 CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:7860", "--workers", "1", "--timeout", "300"]
