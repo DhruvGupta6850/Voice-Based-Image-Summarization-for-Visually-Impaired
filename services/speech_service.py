@@ -1,6 +1,7 @@
 import asyncio
 import os
 import edge_tts
+import uuid
 
 
 class SpeechService:
@@ -15,10 +16,11 @@ class SpeechService:
 
         os.makedirs("static/audio", exist_ok=True)
 
+        filename = f"{uuid.uuid4().hex}.mp3"
         output_path = os.path.join(
             "static",
             "audio",
-            "summary.mp3"
+            filename
         )
 
         asyncio.run(
